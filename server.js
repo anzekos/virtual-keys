@@ -50,7 +50,7 @@ app.post('/songs', async (req, res) => {
   const existingSong = await Song.findOne({ notes: req.body.songNotes });
 
   if (existingSong) {
-    // If a song with the same notes already exists, return it instead of creating a new one
+    // če pesem obstaja se ne izvede
     res.json(existingSong);
   } else {
     const song = new Song({
