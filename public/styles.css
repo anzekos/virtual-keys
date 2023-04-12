@@ -1,0 +1,574 @@
+/*
+    Izbere vsak tip elementa (before, after) 
+    Piano flex, zato da se tipke ne prekrivajo 
+    height tipke bo 4* njene sirine
+    (zaradi tega ne rabimo pisat height ker smo dolocili var)
+    margin bo pa neg 2 (polovico) manjsa od widtha (neg zato da so na belih)
+    hsl specificna stevila za barvo in nasicenje
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@500&display=swap');
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  background: radial-gradient(ellipse at bottom, #1b2735 0%, #171923ec 100%);
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.platforma {
+  background: linear-gradient(#1b1a1a, #141414);
+  border-radius: 20px;
+  width: 1400px;
+  height: 480px;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  margin-top: 0px;
+}
+
+.klavir {
+  justify-content: center;
+  display: flex;
+  margin-top: -25px;
+}
+
+.tipka {
+  height: calc(var(--width) * 4);
+  width: var(--width);
+  border-radius: 6px;
+}
+
+.bela {
+  --width: 90px;
+  background-color: white;
+  border: 1px solid #333;
+  transition: background-color 1s ease-in, box-shadow 0.3s ease-in-out;
+  background-image: linear-gradient(to bottom, #fff, #f1f1f1);
+  transition: background-color 1s ease-in, box-shadow 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  opacity: 1;
+}
+
+.bela.pritisnjena {
+  background-color: #EEE;
+  border: 1px solid rgb(37, 9, 118);
+  transform: translateY(2px);
+  box-shadow: 0 0 10px 2px #1c0f5c, 0 0 2px 1px #310c4c;
+  transition: background-color 1s ease-out, box-shadow 0.5s ease-out;
+  opacity: 0.8;
+}
+
+.crna {
+  --width: 50px;
+  background-color: rgb(17, 17, 17);
+  margin-left: calc(var(--width) / -2);
+  margin-right: calc(var(--width) / -2);
+  z-index: 2;
+  transition: background-color 0.5s ease-in-out, box-shadow 0.3s ease-in-out;
+  background-image: linear-gradient(to bottom, #000, #333);
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
+}
+
+.crna.pritisnjena {
+  background-color: #333;
+  box-shadow: none;
+  transform: translateY(1px);
+  box-shadow: 0 0 10px 2px #1c0f5c, 0 0 1px 0.5px #310c4c;
+  transition: background-color 0.3s ease-out, box-shadow 0.3s ease-out;
+}
+
+.deli-pesem-gumb {
+  background: none;
+  box-shadow: none;
+  color: #000;
+  padding: 0.5rem 1rem;
+  border: 2px solid #000;
+}
+
+.buttons,
+.deli-pesem {
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: center; /* gumbi na sredino */
+}
+
+#akordGumb {
+  size: 10px;
+  display: block;
+  position: relative;
+  left: 1115px;
+  top: 18px;
+  border-radius: 5px;
+  font-size: 0.9rem;
+}
+
+.gumbi {
+  --hue: 200;
+  --saturation: 60%;
+  --lightness: 50%;
+
+  background: linear-gradient(to bottom, hsl(var(--hue), var(--saturation), calc(var(--lightness) - 10%)), hsl(var(--hue), var(--saturation), var(--lightness)));
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  border: none;
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: 600;
+  padding: 0.8rem 1.5rem;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  margin-bottom: 1rem;
+  text-decoration: none;
+  margin-left: 10px;
+
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-top: -43px; 
+}
+
+.gumbi:first-child {
+  margin-left: 0;
+}
+
+.snemalni-gumb {
+  --hue: 0;
+  --saturation: 0%;
+  left:80px;
+}
+
+.snemalni-gumb.pritisnjena {
+  --saturation: 100%;
+}
+
+.gumbi:hover,
+.gumbi:focus {
+  background-color: hsl(var(--hue), var(--saturation), 30%);
+  transform: scale(1.0);
+}
+
+.predvajaj-gumb,
+.shrani-gumb,
+.deli-pesem {
+  display: none;
+}
+
+.predvajaj-gumb.prikazi,
+.shrani-gumb.prikazi,
+.deli-pesem.prikazi {
+  display: block;
+}
+
+.bp{
+  font-family: 'Open Sans', sans-serif;
+  text-align: center;
+  position: relative;
+  top: 300px;
+}
+
+.cp{
+  font-family: 'Open Sans', sans-serif;
+  color: rgba(255, 255, 255, 0.771);
+  text-align: center;
+  position: relative;
+  top: 150px;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+  left: 1270px;
+  top: 15px;
+}
+
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: rgba(255, 255, 255, 0.808);
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #363a3c;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #1f2c37;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+.volumen-slider{
+  position: relative;
+  left: 75px;
+  top: 40px;
+  -webkit-appearance: none;
+  appearance: none;
+  width: 10%;
+  height: 4px;
+  background: #ddd;
+  outline: none;
+  border-radius: 10px;
+  margin: 0;
+  padding: 0;
+}
+
+.volumen-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #bab4b4;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  background: #fff;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  margin-top: -5px;
+}
+
+.fa {
+  color: #fff;
+  position: relative;
+  top: 44px;
+  left: 70px;
+}
+
+#menu {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 999;
+  cursor: pointer;
+}
+
+/*hamburger*/
+.menu-line {
+  width: 30px;
+  height: 3px;
+  background-color: #f4ecec;
+  margin: 5px 0;
+  border-radius: 5px;
+}
+
+/*menu skrit po deafultu*/
+.menu-links {
+  display: none;
+}
+
+/*prikaze linke k bo aktivna klasa dodana*/
+.menu-links.active {
+  display: flex;
+  position: absolute;
+  top: 50px;
+  left: 10px;
+  z-index: 998;
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+/* za listo */
+#song-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 150px;
+  overflow-y: scroll;
+}
+
+#song-list li {
+  margin-bottom: 10px;
+}
+
+#song-list a {
+  display: block;
+  color: #333;
+  text-decoration: none;
+  padding: 5px;
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  transition: all 0.2s ease-in-out;
+}
+
+#song-list a:hover {
+  background-color: #7179db;
+}
+
+#naslov {
+  position: relative;
+  font-family: 'Open Sans', sans-serif;
+  left: 44rem;
+  bottom: 50px;
+  font-size: large;
+  font-weight: bold;
+  color: rgba(205, 185, 185, 0.805);
+}
+
+#naslov2 {
+  font-family: 'Open Sans', sans-serif;
+  font-size: small;
+}
+
+.menu-links {
+  position: relative; /*da bo naslov sticky*/
+}
+
+.song-links-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.title-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 2rem;
+}
+
+.menu-links p {
+  font-weight: bold;
+  margin: 0;
+}
+
+.links-wrapper {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.menu-links ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* za major pa minor switch */
+.switchToggle {
+  display: none;
+  position: relative;
+  display: inline-block;
+  width: 70px;
+  height: 34px;
+  left: 965px;
+  top: -5px;
+}
+
+.switchToggle input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.sliderToggle {
+  display: none;
+  position: relative;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+  background-color: #ccc;
+  transition: .4s;
+}
+
+.toggleText {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 700;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 12px;
+  font-weight: bold;
+  color: rgb(30, 27, 27);
+  text-transform: uppercase;
+  transition: .4s;
+}
+
+.minText {
+  left: 6px;
+}
+
+.majText {
+  right: 6px;
+}
+
+.sliderToggle:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 27px;
+  left: 4px;
+  bottom: 4px;
+  background-color: rgba(255, 255, 255, 0.808);
+  border-radius: 50%;
+  transition: .4s;
+}
+
+input:checked + .sliderToggle {
+  background-color: #363a3c;
+}
+
+input:checked + .sliderToggle:before {
+  transform: translateX(35px);
+}
+
+.sliderToggle.roundToggle {
+  border-radius: 10px;
+}
+
+.sliderToggle.roundToggle:before {
+  border-radius: 20%;
+}
+
+/* slide up panel za looper in funkcije */
+#platform {
+  width: 300px;
+  height: 100px;
+  background: rgb(39, 37, 37);
+  border: 1px solid black;
+  transform: translateY(-60%);
+  transition: transform 0.3s ease-in-out, opacity 0.2s ease-in-out;
+  opacity: 0;
+  visibility: hidden;
+  border-radius: 2px;
+  align-items: center;
+  align-content: center;
+  display: flex;
+}
+
+#platform.active {
+  transform: translateY(0%);
+  opacity: 1;
+  visibility: visible;
+}
+
+#toggle-button {
+  position: relative;
+  z-index: 1;
+  --hue: 200;
+  --saturation: 60%;
+  --lightness: 50%;
+
+  background: linear-gradient(#161515, #141414);  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  border: none;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  text-decoration: none;
+  width: 300px;
+  height: 15px;
+
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+#toggle-button:hover{
+  background-color: hsl(var(--hue), var(--saturation), 30%);
+  transform: scale(1.1);
+}
+
+/* za social */
+#posentaPesemIme{
+  font-family: 'Open Sans', sans-serif;
+  color: rgba(255, 255, 255, 0.771);
+  text-align: center;
+  position: relative;
+}
+
+/* gumbi na platformi */
+.gumbiVPlatformi{
+  --hue: 200;
+  --saturation: 60%;
+  --lightness: 50%;
+
+  background: linear-gradient(to bottom, hsl(var(--hue), var(--saturation), calc(var(--lightness) - 10%)), hsl(var(--hue), var(--saturation), var(--lightness)));
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  border: none;
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.8rem 1.5rem;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  margin-bottom: 1rem;
+  text-decoration: none;
+
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+#loopButton{
+  position: relative;
+  left: 10px;
+  top: 10px;
+}
+
+#spremeniZvok{
+  position: relative;
+  left: 25px;
+  top: 3px;
+}
+
+#naloziMidi{
+  position: relative;
+  right: 15px;
+}
