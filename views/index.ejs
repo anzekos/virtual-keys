@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!--
+    Virtual Keys
+    Ime: Anže
+    Priimek: Kos
+-->
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="icon" type="image/x-icon" href="favpiano.png">
+  <link rel="shortcut icon" href="#">
+  <link rel="stylesheet" href="/styles.css">
+  <link href="https://fonts.googleapis.com/css?family=Archivo+Black|Judson:400,700" rel="stylesheet">
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>  
+  <script>
+    const currentSong = <%- JSON.stringify(locals.song) || 'undefined' %>
+  </script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
+  <script type="module" src="/script.js" defer></script>
+  <title>Virtual Keys</title>
+</head>
+<body>
+
+  <p id="naslov">Virtual Keys</p>
+
+<!-- hamburger menu -->
+<div id="menu">
+  <div class="menu-line"></div>
+  <div class="menu-line"></div>
+  <div class="menu-line"></div>
+</div>
+
+<nav class="menu-links">
+  <div class="song-links-wrapper">
+    <div class="title-wrapper">
+      <p id="naslov2">Shranjene pesmi</p>
+    </div>
+    <div class="links-wrapper">
+  <ul id="song-list">
+    <!-- pesmi se dodajo dinamicno -->
+  </ul>
+</nav>
+
+
+<div class="platforma"> 
+  <div class="volumen">
+    <i class='fa fa-volume-up'></i>  
+    <input type="range" min="0" max="1" value="0.5" step="any" class="volumen-slider">
+  </div>
+  <label class="switch">
+    <input type="checkbox" id="toggle" checked>
+    <span class="slider round"></span>
+  </label>
+  <label class="switchToggle">
+    <input type="checkbox" id="toggleID">
+    <div class="sliderToggle roundToggle">
+      <span class="toggleText minText">min</span>
+      <span class="toggleText majText">maj</span>
+    </div>
+  </label>
+  <button class="gumbi" id="akordGumb">Akordi</button>
+
+  <div class="buttons">
+    <% if (locals.song == null) { %>
+      <button class="snemalni-gumb gumbi">Snemaj</button>
+      <button class="shrani-gumb gumbi">Shrani</button>
+    <% } else { %>
+      <a href="/" class="gumbi" id="posnamiNovo">Posnami novo pesem</a>
+    <% } %>
+    <button class="predvajaj-gumb gumbi <%= locals.song != null ? 'prikazi' : '' %>">Predvajaj</button>
+    <a href="#" class="deli-pesem gumbi">
+      <button class="deli-pesem gumbi"></button>Deli pesem
+    </a>
+  </div>
+  
+  <div class="klavir">
+    <div data-note="C2" class="bela tipka"> <p id="parag" class="bp">y</p></div>
+    <div data-note="Db2" class="crna tipka"><p id="parag" class="cp">s</p></div>
+    <div data-note="D2" class="bela tipka"><p id="parag" class="bp">x</p></div>
+    <div data-note="Eb2" class="crna tipka"><p id="parag" class="cp">d</p></div>
+    <div data-note="E2" class="bela tipka"><p id="parag" class="bp">c</p></div>
+    <div data-note="F2" class="bela tipka"><p id="parag" class="bp">v</p></div>
+    <div data-note="Gb2" class="crna tipka"><p id="parag" class="cp">g</p></div>
+    <div data-note="G2" class="bela tipka"><p id="parag" class="bp">b</p></div>
+    <div data-note="Ab2" class="crna tipka"><p id="parag" class="cp">h</p></div>
+    <div data-note="A2" class="bela tipka"><p id="parag" class="bp">n</p></div>
+    <div data-note="Bb2" class="crna tipka"><p id="parag" class="cp">j</p></div>
+    <div data-note="B2" class="bela tipka"><p id="parag" class="bp">m</p></div>
+    <div data-note="C3" class="bela tipka"><p id="parag" class="bp">Y</p></div>
+    <div data-note="Db3" class="crna tipka"><p id="parag" class="cp">S</p></div>
+    <div data-note="D3" class="bela tipka"><p id="parag" class="bp">X</p></div>
+    <div data-note="Eb3" class="crna tipka"><p id="parag" class="cp">D</p></div>
+    <div data-note="E3" class="bela tipka"><p id="parag" class="bp">C</p></div>
+    <div data-note="F3" class="bela tipka"><p id="parag" class="bp">V</p></div>
+    <div data-note="Gb3" class="crna tipka"><p id="parag" class="cp">G</p></div>
+    <div data-note="G3" class="bela tipka"><p id="parag" class="bp">B</p></div>
+    <div data-note="Ab3" class="crna tipka"><p id="parag" class="cp">H</p></div>
+    <div data-note="A3" class="bela tipka"><p id="parag" class="bp">N</p></div>
+    <div data-note="Bb3" class="crna tipka"><p id="parag" class="cp">J</p></div>
+    <div data-note="B3" class="bela tipka"><p id="parag" class="bp">M</p></div> 
+  </div>
+</div>
+<button id="toggle-button">⇓</button>
+<div id="platform">
+  <div id="button-group">
+    <button id="loopButton" class="gumbiVPlatformi">Začni Loop</button>
+    <button id="spremeniZvok" class="gumbiVPlatformi">Klavir</button>
+  </div>
+  <button id="naloziMidi" class="gumbiVPlatformi">Naloži MIDI</button>
+</div>
+
+
+
+
+  <audio id="C2" class="zvokNote" src="/tones/klavir/C2.mp3"></audio>
+  <audio id="C3" class="zvokNote" src="/tones/klavir/C3.mp3"></audio>
+  <audio id="Db2" class="zvokNote" src="/tones/klavir/Db2.mp3"></audio>
+  <audio id="Db3" class="zvokNote" src="/tones/klavir/Db3.mp3"></audio>
+  <audio id="D2" class="zvokNote" src="/tones/klavir/D2.mp3"></audio>
+  <audio id="D3" class="zvokNote" src="/tones/klavir/D3.mp3"></audio>
+  <audio id="E2" class="zvokNote" src="/tones/klavir/E2.mp3"></audio>
+  <audio id="E3" class="zvokNote" src="/tones/klavir/E3.mp3"></audio>
+  <audio id="Eb2" class="zvokNote" src="/tones/klavir/Eb2.mp3"></audio>
+  <audio id="Eb3" class="zvokNote" src="/tones/klavir/Eb3.mp3"></audio>
+  <audio id="F2" class="zvokNote" src="/tones/klavir/F2.mp3"></audio>
+  <audio id="F3" class="zvokNote" src="/tones/klavir/F3.mp3"></audio>
+  <audio id="Gb2" class="zvokNote" src="/tones/klavir/Gb2.mp3"></audio>
+  <audio id="Gb3" class="zvokNote" src="/tones/klavir/Gb3.mp3"></audio>
+  <audio id="G2" class="zvokNote" src="/tones/klavir/G2.mp3"></audio>
+  <audio id="G3" class="zvokNote" src="/tones/klavir/G3.mp3"></audio>
+  <audio id="Ab2" class="zvokNote" src="/tones/klavir/Ab2.mp3"></audio>
+  <audio id="Ab3" class="zvokNote" src="/tones/klavir/Ab3.mp3"></audio>
+  <audio id="A2" class="zvokNote" src="/tones/klavir/A2.mp3"></audio>
+  <audio id="A3" class="zvokNote" src="/tones/klavir/A3.mp3"></audio>
+  <audio id="Bb2" class="zvokNote" src="/tones/klavir/Bb2.mp3"></audio>
+  <audio id="Bb3" class="zvokNote" src="/tones/klavir/Bb3.mp3"></audio>
+  <audio id="B2" class="zvokNote" src="/tones/klavir/B2.mp3"></audio>
+  <audio id="B3" class="zvokNote" src="/tones/klavir/B3.mp3"></audio>
+
+  <audio id="C2" class="zvokNote" src="/tones/kitara/C2.mp3"></audio>
+  <audio id="C3" class="zvokNote" src="/tones/kitara/C3.mp3"></audio>
+  <audio id="Db2" class="zvokNote" src="/tones/kitara/Db2.mp3"></audio>
+  <audio id="Db3" class="zvokNote" src="/tones/kitara/Db3.mp3"></audio>
+  <audio id="D2" class="zvokNote" src="/tones/kitara/D2.mp3"></audio>
+  <audio id="D3" class="zvokNote" src="/tones/kitara/D3.mp3"></audio>
+  <audio id="E2" class="zvokNote" src="/tones/kitara/E2.mp3"></audio>
+  <audio id="E3" class="zvokNote" src="/tones/kitara/E3.mp3"></audio>
+  <audio id="Eb2" class="zvokNote" src="/tones/kitara/Eb2.mp3"></audio>
+  <audio id="Eb3" class="zvokNote" src="/tones/kitara/Eb3.mp3"></audio>
+  <audio id="F2" class="zvokNote" src="/tones/kitara/F2.mp3"></audio>
+  <audio id="F3" class="zvokNote" src="/tones/kitara/F3.mp3"></audio>
+  <audio id="Gb2" class="zvokNote" src="/tones/kitara/Gb2.mp3"></audio>
+  <audio id="Gb3" class="zvokNote" src="/tones/kitara/Gb3.mp3"></audio>
+  <audio id="G2" class="zvokNote" src="/tones/kitara/G2.mp3"></audio>
+  <audio id="G3" class="zvokNote" src="/tones/kitara/G3.mp3"></audio>
+  <audio id="Ab2" class="zvokNote" src="/tones/kitara/Ab2.mp3"></audio>
+  <audio id="Ab3" class="zvokNote" src="/tones/kitara/Ab3.mp3"></audio>
+  <audio id="A2" class="zvokNote" src="/tones/kitara/A2.mp3"></audio>
+  <audio id="A3" class="zvokNote" src="/tones/kitara/A3.mp3"></audio>
+  <audio id="Bb2" class="zvokNote" src="/tones/kitara/Bb2.mp3"></audio>
+  <audio id="Bb3" class="zvokNote" src="/tones/kitara/Bb3.mp3"></audio>
+  <audio id="B2" class="zvokNote" src="/tones/kitara/B2.mp3"></audio>
+  <audio id="B3" class="zvokNote" src="/tones/kitara/B3.mp3"></audio>
+</body>
+</html>
